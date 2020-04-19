@@ -63,7 +63,7 @@ def vi_boltzmann(mdp, gamma, r_s, r_a, horizon=None,  temperature=1,
     Finds the optimal state and state-action value functions via value 
     iteration with the "soft" max-ent Bellman backup:
     
-    Q_{sa} = r_s + gamma * \sum_{s'} p(s'|s,a)V_{s'}
+    Q_{sa} = r_(s,a) + gamma * \sum_{s'} p(s'|s,a)V_{s'}
     V'_s = temperature * log(\sum_a exp(Q_{sa}/temperature))
     Computes the Boltzmann rational policy 
     \pi_{s,a} = exp((Q_{s,a} - V_s)/temperature).
@@ -74,9 +74,12 @@ def vi_boltzmann(mdp, gamma, r_s, r_a, horizon=None,  temperature=1,
         Instance of the MDP class.
     gamma : float 
         Discount factor; 0<=gamma<=1.
-    r : 1D numpy array
+    r_s : 1D numpy array
         Initial reward vector with the length equal to the 
         number of states in the MDP.
+    r_a : 1D numpy array
+        Initial reward vector with the length equal to the 
+        number of actions in the MDP.
     horizon : int
         Horizon for the finite horizon version of value iteration.
     threshold : float
@@ -235,90 +238,3 @@ def compute_D(mdp, gamma, policy, P_0=None, t_max=None, threshold=1e-6):
             if t==t_max: break
     
     return D
-
-def max_causal_ent_irl(mdp, feature_matrix, trajectories, gamma=1, h=None, 
-                       temperature=1e-2, epochs=300, learning_rate=0.01, theta=None):
-    '''
-    Finds theta, a reward parametrization vector (r[s] = features[s]'.*theta) 
-    that maximizes the log likelihood of the given expert trajectories, 
-    modelling the expert as a Boltzmann rational agent with given temperature. 
-    
-    This is equivalent to finding a reward parametrization vector giving rise 
-    to a reward vector giving rise to Boltzmann rational policy whose expected 
-    feature count matches the average feature count of the given expert 
-    trajectories (Levine et al, supplement to the GPIRL paper).
-    Parameters
-    ----------
-    mdp : object
-        Instance of the MDP class.
-    feature_matrix : 2D numpy array
-        Each of the rows of the feature matrix is a vector of features of the 
-        corresponding state of the MDP. 
-    trajectories : 3D numpy array
-        Expert trajectories. 
-        Dimensions: [number of traj, timesteps in the traj, state and action].
-    gamma : float 
-        Discount factor; 0<=gamma<=1.
-    h : int
-        Horizon for the finite horizon version of value iteration.
-    temperature : float >= 0
-        The temperature parameter for computing V, Q and policy of the 
-        Boltzmann rational agent: p(a|s) is proportional to exp(Q/temperature);
-        the closer temperature is to 0 the more rational the agent is.
-    epochs : int
-        Number of iterations gradient descent will run.
-    learning_rate : float
-        Learning rate for gradient descent.
-    theta : 1D numpy array
-        Initial reward function parameters vector with the length equal to the 
-        #features.
-    Returns
-    -------
-    1D numpy array
-        Reward function parameters computed with Maximum Causal Entropy 
-        algorithm from the expert trajectories.
-    '''    
-    
-    # Compute the state-action visitation counts and the probability 
-    # of a trajectory starting in state s from the expert trajectories.
-    sa_visit_count, P_0 = compute_s_a_visitations(mdp, gamma, trajectories)
-    
-    # Mean state visitation count of expert trajectories
-    # mean_s_visit_count[s] = ( \sum_{i,t} 1_{traj_s_{i,t} = s}) / num_traj
-    mean_s_visit_count = np.sum(sa_visit_count,1) / trajectories.shape[0]
-    # Mean feature count of expert trajectories
-    mean_f_count = np.dot(feature_matrix.T, mean_s_visit_count)
-    
-    if theta is None:
-        theta = np.random.rand(feature_matrix.shape[1])
-        
-
-    for i in range(epochs):
-        r = np.squeeze(np.asarray(np.dot(feature_matrix, theta.reshape(-1,1))))
-        # Compute the Boltzmann rational policy \pi_{s,a} = \exp(Q_{s,a} - V_s) 
-        V, Q, policy = vi_boltzmann(mdp, gamma, r, h, temperature)
-        
-        # IRL log likelihood term: 
-        # L = 0; for all traj: for all (s, a) in traj: L += Q[s,a] - V[s]
-        L = np.sum(sa_visit_count * (Q - V))
-        
-        # The expected #times policy π visits state s in a given #timesteps.
-        D = compute_D(mdp, gamma, policy, P_0, t_max=trajectories.shape[1])        
-
-        # IRL log likelihood gradient w.r.t rewardparameters. 
-        # Corresponds to line 9 of Algorithm 2 from the MaxCausalEnt IRL paper 
-        # www.cs.cmu.edu/~bziebart/publications/maximum-causal-entropy.pdf. 
-        # Negate to get the gradient of neg log likelihood, 
-        # which is then minimized with GD.
-        dL_dtheta = -(mean_f_count - np.dot(feature_matrix.T, D))
-
-        # Gradient descent
-        theta = theta - learning_rate * dL_dtheta
-        theta[theta<0] = 0
-        theta[theta>1] = 1
-
-        if (i+1)%10==0: 
-            print('Epoch: {} log likelihood of all traj: {}'.format(i,L), 
-                  ', average per traj step: {}'.format(
-                  L/(trajectories.shape[0] * trajectories.shape[1])))
-    return theta, policy

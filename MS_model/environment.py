@@ -140,95 +140,8 @@ class Environment(DiscreteEnv):
         state_feature_num = len(self.state_feature_names)
         action_feature_num = len(self.action_feature_names)
 
-        # # Initial state indicator (1 when initial state, 0 otherwise)
-        # isi = []
-
-        # # Create all possible states (i.e., reject those that are not possible).
-        # for weather in state_feature_names_dict['Weather']:
-        #     for at_home in state_feature_names_dict['At Home']:
-        #         for has_jacket in state_feature_names_dict['Has Jacket']:
-
-        #             # If you are at home you always have a jacket.
-        #             if at_home == 'True' and has_jacket == 'False':
-        #                 continue
-                        
-        #             for holding_jacket in state_feature_names_dict['Holding Jacket']:
-                        
-        #                 # If you are at home you are not holding your jacket.
-        #                 if at_home == 'True' and holding_jacket == 'True':
-        #                     continue
-                            
-        #                 # If you are not at home you can hold the jacket only when you have it.
-        #                 if at_home == 'False' and has_jacket == 'False' and holding_jacket == 'True':
-        #                     continue
-
-        #                 for wearing_jacket in state_feature_names_dict['Wearing Jacket']:
-
-        #                     # Come on! Nobody wears jackets at home.
-        #                     if at_home == 'True' and wearing_jacket == 'True':
-        #                         continue
-
-        #                     # You can only wear jacket when you have it with you.
-        #                     if has_jacket == 'False' and wearing_jacket == 'True':
-        #                         continue
-                                
-        #                     # You cannot wear and hold the jacket and the same time.
-        #                     if holding_jacket == 'True' and wearing_jacket == 'True':
-        #                         continue
-                                
-        #                     # If you are outside and you have a jacket, you must either wearing it or hold it.
-        #                     if at_home == 'False' and has_jacket == 'True' and holding_jacket == 'False' and wearing_jacket == 'False':
-        #                         continue
-                                
-        #                     # If you are outside and you don't have a jacket, you can't hold it or wear it.
-        #                     if at_home == 'False' and has_jacket == 'False' and (holding_jacket == 'True' or wearing_jacket == 'True'):
-        #                         continue
-
-        #                     for feeling in state_feature_names_dict['Feeling']:
-
-        #                         # When at home you do not wear a jacket and feel just right.
-
-        #                         if at_home == 'True':
-        #                             if not(feeling == 'Just Right'):
-        #                                 continue                            
-        #                         elif at_home == 'False':
-        #                             if weather == 'Cold':
-        #                                 #If the weather is cold, you can feel just right only when wearing a jacket, and cold otherwise.
-        #                                 if wearing_jacket == 'True' and not(feeling == 'Just Right'):
-        #                                     continue
-        #                                 elif wearing_jacket == 'False' and not(feeling == 'Cold'):
-        #                                     continue
-
-        #                             elif weather == 'Hot':
-        #                                 #If the weather is hot, you can feel just right only when not wearing a jacket, and hot otherwise.
-        #                                 if wearing_jacket == 'True' and not(feeling == 'Hot'):
-        #                                     continue
-        #                                 elif wearing_jacket == 'False' and not(feeling == 'Just Right'):
-        #                                     continue
-
-        #                         #  We are here, so it must mean it is a valid state because we haven't rejected it.
-        #                         current_state = np.array([weather == 'Hot', weather == 'Cold', at_home == 'True', at_home == 'False', has_jacket == 'True', has_jacket == 'False', holding_jacket == 'True', holding_jacket == 'False', wearing_jacket == 'True', wearing_jacket == 'False', feeling == 'Cold', feeling == 'Just Right', feeling == 'Hot'], dtype = int)
-
-        #                         print('State: ', ['Weather:'+weather, 'At Home:' + at_home, 'Has Jacket:' + has_jacket, 'Holding Jacket:' + holding_jacket, 'Wearing Jacket:' + wearing_jacket, 'Feeling:' + feeling])
-
-        #                         if feature_matrix is None:
-        #                             feature_matrix = np.matrix(current_state).T
-        #                         else:
-        #                             feature_matrix = np.concatenate((feature_matrix, np.matrix(current_state).T), axis=1)
-
-
-        #                         isi.append(at_home == 'True')
-
-        #                         nS = nS + 1
-
         nS = state_feature.shape[0]
         nA = action_feature.shape[0]
-
-
-        #  # Create all possible actions (i.e., reject those that are not possible).
-        # for jacket in action_feature_names_dict['Jacket']:
-        #     #  There is one action for each feature.
-        #     nA = nA + 1
 
         self.state_feature_matrix = state_feature
         self.action_feature_matrix = action_feature
@@ -238,11 +151,6 @@ class Environment(DiscreteEnv):
         # isd /= isd.sum()
         isd = initial_state_dist
 
-        # What does isd tell us about probability of being hot or cold?
-        print("Initial state distribution: ", isd)
-
-        # Create transition matrix.
-        # P = transition_proba
         P = {s : {a : [] for a in range(nA)} for s in range(nS)}
 
         for from_state in range(nS):
@@ -251,83 +159,6 @@ class Environment(DiscreteEnv):
                 for to_state in range(nS):
                     if transition_proba[from_state,action,to_state]==0: continue
                     li = P[from_state][action]
-
-                    # from_state_weather_cold = feature_matrix.item(1,from_state)
-                    # from_state_at_home_true = feature_matrix.item(2,from_state)
-                    # from_state_has_jacket_true = feature_matrix.item(4,from_state)
-                    # from_state_holding_jacket_true = feature_matrix.item(6,from_state)
-                    # from_state_wearing_jacket_true = feature_matrix.item(8,from_state)
-                    # from_state_feeling_hot = feature_matrix.item(10,from_state)
-                    # from_state_feeling_justright = feature_matrix.item(11,from_state)
-                    # from_state_feeling_cold = feature_matrix.item(12,from_state)
-
-                    # to_state_weather_cold = feature_matrix.item(1,to_state)
-                    # to_state_at_home_true = feature_matrix.item(2,to_state)
-                    # to_state_has_jacket_true = feature_matrix.item(4,to_state)
-                    # to_state_holding_jacket_true = feature_matrix.item(6,to_state)
-                    # to_state_wearing_jacket_true = feature_matrix.item(8,to_state)
-                    # to_state_feeling_hot = feature_matrix.item(10,to_state)
-                    # to_state_feeling_justright = feature_matrix.item(11,to_state)
-                    # to_state_feeling_cold = feature_matrix.item(12,to_state)
-
-                    # # Initialize transition probability
-                    # p = 1.0
-
-                    # # The weather can change and you have no control over this!
-                    # p *= weather_transition_matrix.item(from_state_weather_cold, to_state_weather_cold)
-
-                    # # Can only transition from home to outside and from outside to outside.
-                    # if from_state_at_home_true == 1 and to_state_at_home_true == 1:
-                    #     # We cannot stay at home. Have to keep moving.
-                    #     p = 0.0
-
-                    # if from_state_at_home_true == 0 and to_state_at_home_true == 1:
-                    #     # We cannot go home. Not in this example.
-                    #     p = 0.0
-
-                    # # Where are you?
-                    # if(from_state_at_home_true == 1):
-                    #     # You are inside.
-                    #     if action == 0:
-                    #         # Bring. That means in the next state you will have it but not wear it or p is 0.
-                    #         if to_state_has_jacket_true == 0 or to_state_wearing_jacket_true == 1:
-                    #             p = 0
-                    #     elif action == 1:
-                    #         # Leave. That means in the next state you will not have it and thus not be wearing it or p is 0.
-                    #         if to_state_has_jacket_true == 1:
-                    #             p = 0
-                    #     elif action == 2:
-                    #         # Put on. That means in the next state you will have it and wear it or p is 0.
-                    #         if to_state_has_jacket_true == 0 or to_state_wearing_jacket_true == 0:
-                    #             p = 0
-                    #     elif action == 3:
-                    #         # Can't take off at home because you are not wearing it.
-                    #         p = 0
-
-                    # else:
-                    #     # You are outside.
-                    #     #If you have jacket you must have it with you no matter what you do and if you don't you can't get it.
-                    #     if not(from_state_has_jacket_true == to_state_has_jacket_true):
-                    #         p = 0
-                    #     else:
-                    #         if action == 0:
-                    #             # Bring. You cannot bring the jacket when you are outside.
-                    #             p = 0
-                    #         elif action == 1:
-                    #             # Leave. You cannot leave the jacket when you are outside.
-                    #             p = 0
-                    #         elif action == 2:
-                    #             # Put on  or keep on. That means in the next state you will have it and wear it, but only when you already have it, or p is 0.
-                    #             if from_state_has_jacket_true == 0 or to_state_has_jacket_true == 0 or to_state_wearing_jacket_true == 0:
-                    #                 p = 0
-                    #         elif action == 3:
-                    #             # Take off or keep off. That means that in the next state you will have it, but not wear it, but only  if you already had it with you.
-                    #             if to_state_wearing_jacket_true == 1:
-                    #                 p = 0
-
-                    # # Suppose that the "true" reward is when you are feeeling just right. We do not use this reward in IRL, we learn it. In RL you would identify it using preference illicitation and calculate optimal behavior.
-                    # r = to_state_feeling_justright
-
                     li.append((transition_proba[from_state,action,to_state], to_state, 0, False))
 
         super(Environment, self).__init__(nS, nA, P, isd)        
