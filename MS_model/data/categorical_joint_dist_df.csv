@@ -1,0 +1,97 @@
+Pain_Score,Age,Gender,Fatigue_Score,Phi
+Higher,60 and Older,Female,Higher,0.0012616216201078204
+Higher,60 and Older,Female,Lower,0.0010190668627039138
+Higher,60 and Older,Female,Normal,0.004778665602464469
+Higher,60 and Older,Female,Not Recorded,0.0014637505846110763
+Higher,60 and Older,Male,Higher,0.0006906142136835967
+Higher,60 and Older,Male,Lower,0.0006677525017823465
+Higher,60 and Older,Male,Normal,0.0025195511657836044
+Higher,60 and Older,Male,Not Recorded,0.00014193312805359435
+Higher,Between 30 to 60,Female,Higher,0.022014011537493265
+Higher,Between 30 to 60,Female,Lower,0.018096827241942972
+Higher,Between 30 to 60,Female,Normal,0.045903999710355525
+Higher,Between 30 to 60,Female,Not Recorded,0.01219687064864501
+Higher,Between 30 to 60,Male,Higher,0.007739924632682013
+Higher,Between 30 to 60,Male,Lower,0.005959644364080249
+Higher,Between 30 to 60,Male,Normal,0.01790626195601314
+Higher,Between 30 to 60,Male,Not Recorded,0.009426505939778422
+Higher,Younger than 30,Female,Higher,0.0026773627594902697
+Higher,Younger than 30,Female,Lower,0.0024178146096954832
+Higher,Younger than 30,Female,Normal,0.004716669650735022
+Higher,Younger than 30,Female,Not Recorded,0.003196459059079843
+Higher,Younger than 30,Male,Higher,0.00030875133890415925
+Higher,Younger than 30,Male,Lower,0.00045920884415694753
+Higher,Younger than 30,Male,Normal,0.0016252545098660567
+Higher,Younger than 30,Male,Not Recorded,0.0015876401335528597
+Lower,60 and Older,Female,Higher,0.0004108090234070094
+Lower,60 and Older,Female,Lower,0.0003318283833928447
+Lower,60 and Older,Female,Normal,0.0015560283036123975
+Lower,60 and Older,Female,Not Recorded,0.0004766262234188134
+Lower,60 and Older,Male,Higher,0.0007839054395470469
+Lower,60 and Older,Male,Lower,0.0007579554663758342
+Lower,60 and Older,Male,Normal,0.002859903293244053
+Lower,60 and Older,Male,Not Recorded,0.00016110608343794478
+Lower,Between 30 to 60,Female,Higher,0.014620970609195963
+Lower,Between 30 to 60,Female,Lower,0.01201930773832393
+Lower,Between 30 to 60,Female,Normal,0.030487902192045148
+Lower,Between 30 to 60,Female,Not Recorded,0.008100753784664821
+Lower,Between 30 to 60,Male,Higher,0.004339081187975132
+Lower,Between 30 to 60,Male,Lower,0.0033410377974497038
+Lower,Between 30 to 60,Male,Normal,0.010038434233870335
+Lower,Between 30 to 60,Male,Not Recorded,0.005284595978999221
+Lower,Younger than 30,Female,Higher,0.001887118870447792
+Lower,Younger than 30,Female,Lower,0.0017041783221297142
+Lower,Younger than 30,Female,Normal,0.0033245088929469762
+Lower,Younger than 30,Female,Not Recorded,0.002252999967083948
+Lower,Younger than 30,Male,Higher,0.0002261115753312988
+Lower,Younger than 30,Male,Lower,0.0003362979267617794
+Lower,Younger than 30,Male,Normal,0.0011902421503480044
+Lower,Younger than 30,Male,Not Recorded,0.0011626955624903842
+Normal,60 and Older,Female,Higher,0.0070671663975957096
+Normal,60 and Older,Female,Lower,0.005708458839179445
+Normal,60 and Older,Female,Normal,0.026768425994631546
+Normal,60 and Older,Female,Not Recorded,0.00819942269627593
+Normal,60 and Older,Male,Higher,0.003800321742465271
+Normal,60 and Older,Male,Lower,0.0036745179882319377
+Normal,60 and Older,Male,Normal,0.013864622081131917
+Normal,60 and Older,Male,Not Recorded,0.0007810316408652762
+Normal,Between 30 to 60,Female,Higher,0.06861974154947945
+Normal,Between 30 to 60,Female,Lower,0.056409510192757424
+Normal,Between 30 to 60,Female,Normal,0.1430870784657841
+Normal,Between 30 to 60,Female,Not Recorded,0.03801879135917612
+Normal,Between 30 to 60,Male,Higher,0.022786080478960948
+Normal,Between 30 to 60,Male,Lower,0.0175449946285669
+Normal,Between 30 to 60,Male,Normal,0.05271543915094798
+Normal,Between 30 to 60,Male,Not Recorded,0.027751319705650042
+Normal,Younger than 30,Female,Higher,0.008505411441178544
+Normal,Younger than 30,Female,Lower,0.007680882230493031
+Normal,Younger than 30,Female,Normal,0.014983855239421869
+Normal,Younger than 30,Female,Not Recorded,0.010154469862549573
+Normal,Younger than 30,Male,Higher,0.0012177887382056247
+Normal,Younger than 30,Male,Lower,0.0018112289355037968
+Normal,Younger than 30,Male,Normal,0.006410390464564632
+Normal,Younger than 30,Male,Not Recorded,0.00626203041524009
+Not Recorded,60 and Older,Female,Higher,0.0018121474179730512
+Not Recorded,60 and Older,Female,Lower,0.0014637505846110763
+Not Recorded,60 and Older,Female,Normal,0.0068639015017216915
+Not Recorded,60 and Older,Female,Not Recorded,0.0021024781124413645
+Not Recorded,60 and Older,Male,Higher,0.0001930610090785289
+Not Recorded,60 and Older,Male,Lower,0.00018667002395041207
+Not Recorded,60 and Older,Male,Normal,0.0007043398193278743
+Not Recorded,60 and Older,Male,Not Recorded,3.967736600372525e-05
+Not Recorded,Between 30 to 60,Female,Higher,0.01485754791890148
+Not Recorded,Between 30 to 60,Female,Lower,0.012213788362439741
+Not Recorded,Between 30 to 60,Female,Normal,0.030981217312631086
+Not Recorded,Between 30 to 60,Female,Not Recorded,0.008231829524312189
+Not Recorded,Between 30 to 60,Male,Higher,0.010264793250721972
+Not Recorded,Between 30 to 60,Male,Lower,0.007903761360518078
+Not Recorded,Between 30 to 60,Male,Normal,0.023747527992149468
+Not Recorded,Between 30 to 60,Male,Not Recorded,0.012501560304599344
+Not Recorded,Younger than 30,Female,Higher,0.004257850537575225
+Not Recorded,Younger than 30,Female,Lower,0.0038450871848270214
+Not Recorded,Younger than 30,Female,Normal,0.007500991166311116
+Not Recorded,Younger than 30,Female,Not Recorded,0.005083377243071635
+Not Recorded,Younger than 30,Male,Higher,0.0011626955624903842
+Not Recorded,Younger than 30,Male,Lower,0.0017292883239070182
+Not Recorded,Younger than 30,Male,Normal,0.006120382224885931
+Not Recorded,Younger than 30,Male,Not Recorded,0.005978734034531774
