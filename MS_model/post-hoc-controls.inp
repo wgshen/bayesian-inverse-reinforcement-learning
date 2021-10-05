@@ -1,0 +1,18 @@
+# Controls for read-in
+./post-hoc-inputs/ # folder for files to construct the MDP, no space in the path
+
+# Controls for output results
+1 # prefix of stored files
+./results/post-hoc/ # path to store results, no space in the path
+
+# Controls for Bayesian inverse reinforcement learning
+0 1 # range of the truncated normal prior
+0.5 0.5 # mean and standard deviation of the truncated normal prior
+1 # discount factor gamma
+0.2 # temperature for softmax operator
+5 # length of each trajectory (data instance)
+1 50 250 707 # number of data instances (n_d)
+
+# Controls for MCMC
+6 # number of cpu cores to use
+1000 # number of MCMC samples to draw in each chain
