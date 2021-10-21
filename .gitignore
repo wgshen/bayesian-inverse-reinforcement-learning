@@ -1,2 +1,5 @@
+.DS_Store
+.ipynb_checkpoints
+__pycache__
 
 MS_model/old_version/data/transition_proba.npy
